@@ -1,4 +1,4 @@
-import { ShoppingCart, LogIn, LogOut, Search } from "lucide-react"
+import { ShoppingCart, LogIn, LogOut, Search, Wallet } from "lucide-react"
 
 const NavLinks = [
   {
@@ -7,6 +7,14 @@ const NavLinks = [
     className: "text-primary border-border",
     variant: "outline",
     icon: <ShoppingCart className="w-5 h-5" />,
+  },
+  {
+    label: "Wallet Explorer",
+    href: "/wallet-explorer",
+    authRequired: false,
+    className: "text-primary border-border",
+    variant: "outline",
+    icon: <Wallet className="w-5 h-5" />,
   },
   {
     label: "Explore",
