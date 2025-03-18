@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useRouter } from "next/navigation"
+import { motion } from "framer-motion";
 
 export default function NavBar() {
   const auth = useAuth();
