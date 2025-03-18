@@ -1,29 +1,6 @@
-import { ShoppingCart, LogIn, LogOut, Search, Wallet } from "lucide-react"
+import { LogIn } from "lucide-react";
 
 const NavLinks = [
-  {
-    href: "/cart",
-    authRequired: true,
-    className: "text-primary border-border",
-    variant: "outline",
-    icon: <ShoppingCart className="w-5 h-5" />,
-  },
-  {
-    label: "Wallet Explorer",
-    href: "/wallet-explorer",
-    authRequired: false,
-    className: "text-primary border-border",
-    variant: "outline",
-    icon: <Wallet className="w-5 h-5" />,
-  },
-  {
-    label: "Explore",
-    href: "/explore",
-    authRequired: false,
-    className: "text-primary border-border",
-    variant: "outline",
-    icon: <Search className="w-5 h-5" />,
-  },
   {
     label: "Login",
     href: "/login",
@@ -31,14 +8,6 @@ const NavLinks = [
     className: "bg-primary text-primary-foreground",
     variant: "default",
     icon: <LogIn className="w-5 h-5" />,
-  },
-  {
-    label: "Logout",
-    href: "/logout",
-    authRequired: true,
-    className: "bg-primary text-primary-foreground",
-    variant: "default",
-    icon: <LogOut className="w-5 h-5" />,
   },
 ]
 

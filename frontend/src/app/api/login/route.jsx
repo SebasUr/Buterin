@@ -1,29 +1,18 @@
 "use server";
-import { setAuthToken, setRefreshToken, getAuthToken, getRefreshToken } from "@/lib/auth";
+import { setAuthToken, setRefreshToken } from "@/lib/auth";
 import { NextResponse } from "next/server";
+import ApiProxy from "../proxy";
 
 const DJANGO_LOGIN_URL = "http://localhost:8000/api/auth/login";
 
-
 export async function POST(request) {
   const body = await request.json();
-  const response = await fetch(DJANGO_LOGIN_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  })
-  
-  const data = await response.json();
-  if (response.ok) {
-    setAuthToken(data.access);
-    setRefreshToken(data.refresh);
-    const authToken = await getAuthToken();
-    const refreshToken = await getRefreshToken();
-    // console.log(authToken, refreshToken);
-    return NextResponse.json({}, {status:200})
+  const {response, status} = await ApiProxy.post(DJANGO_LOGIN_URL, body, false)
+  if (status === 200) {
+    const {access, refresh, username, email, id} = response
+    setAuthToken(access);
+    setRefreshToken(refresh);
+    return NextResponse.json({"username": username}, {status:status})
   }
-  
-  return NextResponse.json({data}, {status:401})
+  return NextResponse.json({response}, {status:status})
 }

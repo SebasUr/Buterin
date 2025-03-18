@@ -1,25 +1,17 @@
 "use server";
-import { getAuthToken } from "@/lib/auth";
 import { NextResponse } from "next/server";
+import ApiProxy from "../proxy";
 
 const DJANGO_CART_URL = "http://localhost:8000/api/cart";
 
 export async function GET(params) {
-  const authToken = await getAuthToken();
-  
-  if (!authToken) {
-    return NextResponse.json({}, {status:401})
-  }
-  
-  const response = await fetch(DJANGO_CART_URL, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      "Authorization": `Bearer ${authToken}`
-    }
-  })
+  const {response, status} = await ApiProxy.get(DJANGO_CART_URL, true)
 
-  const json = await response.json()
-  return NextResponse.json({...json}, {status:response.status})
+  return NextResponse.json(response, {status:status})
 }
+
+export async function POST(request) {
+  const requestData = await request.json()
+  const {response, status} = await ApiProxy.post(DJANGO_CART_URL, requestData, true)
+  return NextResponse.json(response, {status: status})
+} 

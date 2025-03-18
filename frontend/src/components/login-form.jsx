@@ -28,8 +28,9 @@ export function LoginForm({ className, ...props }) {
       body: JSON.stringify(Object.fromEntries(formData)),
     });
 
+    const json = await response.json()
     if (response.ok) {
-      auth.login();
+      auth.login(json?.username);
     }
   }
 
