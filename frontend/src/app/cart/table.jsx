@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/table";
 import { useEffect } from "react";
 import ApiProxy from "../api/proxy";
-import { useRouter } from "next/navigation";
 
 const CART_URL = "/api/cart";
 
@@ -32,15 +31,14 @@ const fetcher = async (url) => {
 export default function CartTable() {
   const { data, error, isLoading } = useSWR(CART_URL, fetcher);
   const auth = useAuth();
-  const { items } = data || { items: [] };
-  const router = useRouter();
-
   useEffect(() => {
     if (error?.status === 401 && auth.isAuthenticated !== null) {
       auth.loginRequiredRedirect();
     }
   }, [auth, error]);
-
+  
+  const { items } = data || { items: [] };
+  
   async function handleClick(event, nftId) {
     event.preventDefault();
     const { response, status } = await ApiProxy.post(
