@@ -8,62 +8,15 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
-// Mock wallet NFT data
-const mockWalletNfts = {
-  "0x1234567890abcdef1234567890abcdef12345678": [
-    {
-      id: 1,
-      title: "Cosmic Voyager #42",
-      creator: "ArtistOne",
-      price: "0.85 ETH",
-      image: "/placeholder.svg?height=400&width=400",
-      collection: "Cosmic Voyagers",
-    },
-    {
-      id: 2,
-      title: "Digital Genesis #18",
-      creator: "CryptoCreator",
-      price: "1.2 ETH",
-      image: "/placeholder.svg?height=400&width=400",
-      collection: "Digital Genesis",
-    },
-    {
-      id: 3,
-      title: "Neon Dreams #7",
-      creator: "PixelMaster",
-      price: "0.65 ETH",
-      image: "/placeholder.svg?height=400&width=400",
-      collection: "Neon Dreams",
-    },
-  ],
-  "0xabcdef1234567890abcdef1234567890abcdef12": [
-    {
-      id: 4,
-      title: "Ethereal Landscape",
-      creator: "VirtualArtist",
-      price: "0.6 ETH",
-      image: "/placeholder.svg?height=400&width=400",
-      collection: "Ethereal Landscapes",
-    },
-    {
-      id: 5,
-      title: "Crypto Punk #3078",
-      creator: "NFTLegend",
-      price: "5.5 ETH",
-      image: "/placeholder.svg?height=400&width=400",
-      collection: "Crypto Punks",
-    },
-  ],
-}
-
 export default function WalletExplorerPage() {
   const [walletAddress, setWalletAddress] = useState("")
   const [searchedAddress, setSearchedAddress] = useState("")
+  const [nfts, setNfts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
 
-  // Handle search submission
-  const handleSearch = (e) => {
+  // Maneja la búsqueda haciendo el fetch al endpoint del backend
+  const handleSearch = async (e) => {
     e.preventDefault()
 
     if (!walletAddress.trim()) {
@@ -74,90 +27,72 @@ export default function WalletExplorerPage() {
     setIsLoading(true)
     setError("")
 
-    // Simulate API call
-    setTimeout(() => {
-      if (mockWalletNfts[walletAddress.trim()]) {
-        setSearchedAddress(walletAddress.trim())
-      } else {
-        // If wallet not in mock data, show error or empty state
-        setSearchedAddress(walletAddress.trim())
+    try {
+      const res = await fetch(`/api/wallet-explorer?wallet=${walletAddress.trim()}`)
+      if (!res.ok) {
+        throw new Error("Error al obtener datos del backend")
       }
-      setIsLoading(false)
-    }, 1000)
+      const data = await res.json()
+      setNfts(data)
+      setSearchedAddress(walletAddress.trim())
+    } catch (err) {
+      setError(err.message)
+      setNfts([])
+    }
+    setIsLoading(false)
   }
 
-  // Get NFTs for the searched wallet
-  const getNftsForWallet = (address) => {
-    return mockWalletNfts[address] || []
-  }
-
-  // Format wallet address for display
+  // Formatea la dirección para mostrarla de forma abreviada
   const formatWalletAddress = (address) => {
     if (!address) return ""
     return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`
   }
 
-  // Render NFT card
-  const renderNftCard = (nft) => (
-    <Card key={nft.id} className="overflow-hidden transition-all hover:shadow-md">
+  // Renderiza la tarjeta de cada NFT (sólo se muestran nombre e imagen)
+  const renderNftCard = (nft, index) => (
+    <Card key={index} className="overflow-hidden transition-all hover:shadow-md">
       <div className="aspect-square relative overflow-hidden">
         <Image
           src={nft.image || "/placeholder.svg"}
-          alt={nft.title}
+          alt={nft.name}
+          unoptimized
           fill
           className="object-cover transition-transform hover:scale-105"
         />
       </div>
       <CardContent className="p-4">
-        <div className="flex justify-between items-start mb-2">
-          <div>
-            <h3 className="font-medium line-clamp-1">{nft.title}</h3>
-            <p className="text-sm text-muted-foreground">by @{nft.creator}</p>
-          </div>
-        </div>
-        <Badge variant="outline" className="mb-2">
-          {nft.collection}
-        </Badge>
-        <div className="flex justify-between items-center mt-3">
-          <div>
-            <p className="text-xs text-muted-foreground">Current Price</p>
-            <p className="font-medium">{nft.price}</p>
-          </div>
-        </div>
+        <h3 className="font-medium line-clamp-1">{nft.name}</h3>
       </CardContent>
     </Card>
   )
 
-  const nfts = searchedAddress ? getNftsForWallet(searchedAddress) : []
-
   return (
     <div className="min-h-screen bg-background">
-      {/* Page Header */}
+      {/* Encabezado de la página */}
       <div className="bg-muted py-8 md:py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">Wallet Explorer</h1>
           <p className="text-muted-foreground max-w-2xl">
-            Enter an Ethereum wallet address to view all NFTs owned by that wallet. Discover collections and digital
-            assets across the blockchain.
+            Ingresa una dirección de Ethereum para ver todos los NFTs asociados a esa wallet.
           </p>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        {/* Search Form */}
+        {/* Formulario de búsqueda */}
         <div className="max-w-3xl mx-auto mb-12">
           <form onSubmit={handleSearch} className="space-y-4">
             <div className="relative">
               <Wallet className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Enter Ethereum wallet address (0x...)"
+                placeholder="Ingresa la dirección de Ethereum (0x...)"
                 className="pl-10 py-6 text-base"
                 value={walletAddress}
                 onChange={(e) => setWalletAddress(e.target.value)}
               />
               <Button type="submit" className="absolute right-1 top-1/2 -translate-y-1/2" disabled={isLoading}>
-                {isLoading ? "Searching..." : "Search"}
+                {isLoading ? "Buscando..." : "Search"}
               </Button>
             </div>
 
@@ -170,19 +105,20 @@ export default function WalletExplorerPage() {
             )}
 
             <p className="text-sm text-muted-foreground">
-              Try these example addresses: 0x1234567890abcdef1234567890abcdef12345678 or
-              0xabcdef1234567890abcdef1234567890abcdef12
+              Ejemplos: 0x1234567890abcdef1234567890abcdef12345678 o 0xabcdef1234567890abcdef1234567890abcdef12
             </p>
           </form>
         </div>
 
-        {/* Results Section */}
+        {/* Sección de resultados */}
         {searchedAddress && (
           <div className="space-y-8">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-bold">Wallet NFTs</h2>
-                <p className="text-muted-foreground">Showing NFTs owned by {formatWalletAddress(searchedAddress)}</p>
+                <p className="text-muted-foreground">
+                  Mostrando NFTs de {formatWalletAddress(searchedAddress)}
+                </p>
               </div>
               <Badge variant="secondary" className="px-3 py-1">
                 {nfts.length} NFTs
@@ -197,7 +133,9 @@ export default function WalletExplorerPage() {
               <Alert>
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>No NFTs Found</AlertTitle>
-                <AlertDescription>This wallet doesn't own any NFTs or the wallet address is invalid.</AlertDescription>
+                <AlertDescription>
+                  Esta wallet no posee NFTs o la dirección es inválida.
+                </AlertDescription>
               </Alert>
             )}
           </div>
@@ -206,4 +144,3 @@ export default function WalletExplorerPage() {
     </div>
   )
 }
-

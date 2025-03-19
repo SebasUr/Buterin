@@ -6,7 +6,7 @@ import HeroSection from "@/components/hero-section";
 import StatsSection from "@/components/stats-section";
 import FeaturedNFTs from "@/components/featured-nft";
 import CallToAction from "@/components/call-to-action";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
