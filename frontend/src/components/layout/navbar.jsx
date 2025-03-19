@@ -6,7 +6,7 @@ import NavLinks from "./navbar-links"
 import { useAuth } from "../auth-provider"
 import { ThemeToggleButton } from "../theme-toggle-button"
 import { Button } from "@/components/ui/button"
-import { User, Menu, LogOut, ShoppingCart, Search, Wallet } from "lucide-react"
+import { User, Menu, LogOut, ShoppingCart, Search, Wallet, ListPlus } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -96,7 +96,12 @@ export default function NavBar() {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel><strong>{auth.username ? auth.username : "My Account"}</strong></DropdownMenuLabel>
+
                 <DropdownMenuSeparator />
+
+                <DropdownMenuItem onClick={(e) => router.push("/wishlist")}>
+                  <ListPlus className="w-5 h-5" />Wishlist
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={(e) => router.push("/cart")}>
                   <ShoppingCart className="w-5 h-5" />Shopping cart
                 </DropdownMenuItem>

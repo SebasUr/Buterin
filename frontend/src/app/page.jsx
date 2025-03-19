@@ -2,11 +2,11 @@
 import { useAuth } from "@/components/auth-provider";
 import { Suspense, useState } from "react";
 import useSWR from "swr";
-import HeroSection from "@/components/HeroSection";
-import StatsSection from "@/components/StatsSection";
-import FeaturedNFTs from "@/components/FeaturedNFTs";
-import CallToAction from "@/components/CallToAction";
-import Footer from "@/components/Footer";
+import HeroSection from "@/components/hero-section";
+import StatsSection from "@/components/stats-section";
+import FeaturedNFTs from "@/components/featured-nft";
+import CallToAction from "@/components/call-to-action";
+import Footer from "@/components/footer";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 

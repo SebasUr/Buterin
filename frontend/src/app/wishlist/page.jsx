@@ -1,7 +1,9 @@
 "use client";
 import { useAuth } from "@/components/auth-provider";
+import { X } from "lucide-react";
 import { useEffect } from "react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
+import ApiProxy from "../api/proxy";
 
 const WISHLIST_URL = "/api/wishlist";
 
@@ -27,6 +29,19 @@ export default function WishlistPage(params) {
 
   const { wishlist_items } = data || { wishlist_items: [] };
 
+  async function handleClick(event, nftId) {
+    event.preventDefault();
+    const { response, status } = await ApiProxy.post(
+      "http://localhost:8000/api/wishlist/remove_item/",
+      { nft_id: nftId },
+      true
+    );
+
+    if (status === 200) {
+      mutate(WISHLIST_URL); // Actualiza el carrito sin recargar la página
+    }
+  }
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -37,9 +52,10 @@ export default function WishlistPage(params) {
               <img src={item.image_url} alt={item.name} className="w-20 h-20 rounded-md" />
               <div className="flex flex-col gap-2">
                 <h3 className="font-medium">{item.name}</h3>
-                <p className="text-muted-foreground">{item.description}</p>
+                <p className="text-muted-foreground w-200">{item.description}</p>
                 <p className="font-medium">{item.price} ETH</p>
               </div>
+              <X className="hover:cursor-pointer" onClick={(e) => handleClick(e, item.nft_id)} />
             </div>
           ))
         }

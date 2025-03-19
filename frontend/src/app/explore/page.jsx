@@ -36,9 +36,9 @@ import {
 // } from "@/components/ui/pagination"
 import { Skeleton } from "@/components/ui/skeleton";
 import ApiProxy from "../api/proxy";
-import NFTSearch from "@/components/NFTSearch";
-import NftCard from "@/components/NftCard";
-import NftListItem from "@/components/NftListList";
+import NFTSearch from "@/components/nft-search";
+import NftCard from "@/components/nft-card";
+import NftListItem from "@/components/nft-list-item";
 // import { Badge } from "@/components/ui/badge"
 // import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -91,7 +91,7 @@ export default function ExplorePage() {
   const nfts = data ? data : [];
   // const totalPages = data?.totalPages || 5
 
-  async function handleClick(event, nftId) {
+  async function handleShopping(event, nftId) {
     event.preventDefault();
     const { response, status } = await ApiProxy.post(
       `http://localhost:8000/api/cart/add_item/`,
@@ -103,6 +103,15 @@ export default function ExplorePage() {
     if (status === 200) {
       router.push("/cart");
     }
+  }
+
+  async function handleLinking(event, nftId) {
+    event.preventDefault();
+    const { response, status } = await ApiProxy.post(
+      `http://localhost:8000/api/wishlist/add_item/`,
+      { nft_id: nftId },
+      true
+    );
   }
 
   // Loading skeleton for NFT cards
@@ -143,7 +152,7 @@ export default function ExplorePage() {
               nfts={nfts}
               view={view}
               renderNftCard={(nft) => (
-                <NftCard key={nft.nft_id} nft={nft} handleClick={handleClick} />
+                <NftCard key={nft.nft_id} nft={nft} handleShopping={handleShopping} handleLiking={handleLinking}/>
               )}
               renderNftListItem={(nft) => (
                 <NftListItem key={nft.nft_id} nft={nft} />
