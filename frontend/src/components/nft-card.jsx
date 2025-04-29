@@ -23,9 +23,8 @@ const NftCard = ({ nft, handleShopping, handleLiking }) => {
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm"
-          >
-            <Heart className="h-4 w-4 hover:cursor-pointer" onClick={(e) => {
+            className="h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm hover:cursor-pointer hover:bg-accent/80 transition-all"
+            onClick={(e) => {
               handleLiking(e, nft.nft_id);
               toast("You've liked this nft", {
                 description: `${nft.name} has been added to your wishlist.`,
@@ -33,7 +32,9 @@ const NftCard = ({ nft, handleShopping, handleLiking }) => {
                   label: "Ok",
                 },
               });
-            }}/>
+            }}
+          >
+            <Heart className="h-4 w-4" />
           </Button>
         </div>
       </div>
@@ -48,7 +49,7 @@ const NftCard = ({ nft, handleShopping, handleLiking }) => {
         </div>
 
         <div className="mt-4 pt-4 border-t">
-          <Button className="w-full" size="sm" onClick={(e) => handleShopping(e, nft.nft_id)}>
+          <Button className="w-full hover:cursor-pointer" size="sm" onClick={(e) => handleShopping(e, nft.nft_id)}>
             Add to Shopping Cart
           </Button>
         </div>
