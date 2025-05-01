@@ -4,6 +4,7 @@ import { X } from "lucide-react";
 import { useEffect } from "react";
 import useSWR, { mutate } from "swr";
 import ApiProxy from "../api/proxy";
+import NftListItem from "@/components/nft-list-item";
 
 const WISHLIST_URL = "/api/wishlist";
 
@@ -44,17 +45,12 @@ export default function WishlistPage(params) {
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+      <main className="flex flex-col gap-[32px] row-start-2 items-stretch">
         <h1 className="text-3xl font-bold">Wishlist</h1>
         {
           wishlist_items.map((item, idx) => (
-            <div key={idx} className="flex gap-4 items-center">
-              <img src={item.image_url} alt={item.name} className="w-20 h-20 rounded-md" />
-              <div className="flex flex-col gap-2">
-                <h3 className="font-medium">{item.name}</h3>
-                <p className="text-muted-foreground w-200">{item.description}</p>
-                <p className="font-medium">{item.price} ETH</p>
-              </div>
+            <div key={idx} className="flex justify-between items-center">
+              <NftListItem nft={item} />
               <X className="hover:cursor-pointer" onClick={(e) => handleClick(e, item.nft_id)} />
             </div>
           ))

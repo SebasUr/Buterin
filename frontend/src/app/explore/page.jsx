@@ -107,6 +107,7 @@ export default function ExplorePage() {
 
   async function handleLinking(event, nftId) {
     event.preventDefault();
+    console.log("Linking NFT with ID:", nftId);
     const { response, status } = await ApiProxy.post(
       `http://localhost:8000/api/wishlist/add_item/`,
       { nft_id: nftId },
