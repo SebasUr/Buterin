@@ -151,63 +151,18 @@ export default function ExplorePage() {
           <div className="flex-1">
             <NFTSearch
               nfts={nfts}
-              view={view}
               renderNftCard={(nft) => (
-                <NftCard key={nft.nft_id} nft={nft} handleShopping={handleShopping} handleLiking={handleLinking}/>
+                <NftCard
+                  key={nft.nft_id}
+                  nft={nft}
+                  handleShopping={handleShopping}
+                  handleLiking={handleLinking}
+                />
               )}
               renderNftListItem={(nft) => (
                 <NftListItem key={nft.nft_id} nft={nft} />
               )}
             />
-          </div>
-
-          {/* Controles de ordenamiento y vista */}
-          <div className="flex flex-col md:flex-row items-start gap-4">
-            {/* Dropdown de ordenamiento (Sort) */}
-            <div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <ArrowUpDown className="h-4 w-4" />
-                    Sort
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  {sortOptions.map((option) => (
-                    <DropdownMenuItem
-                      key={option.value}
-                      onClick={() => handleSortChange(option.value)}
-                      className={
-                        currentSort === option.value ? "bg-accent" : ""
-                      }
-                    >
-                      {option.label}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-
-            {/* Botones para cambiar entre Grid y List */}
-            <div className="flex border rounded-md overflow-hidden">
-              <Button
-                variant={view === "grid" ? "default" : "ghost"}
-                size="icon"
-                onClick={() => setView("grid")}
-                className="rounded-none"
-              >
-                <Grid3X3 className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={view === "list" ? "default" : "ghost"}
-                size="icon"
-                onClick={() => setView("list")}
-                className="rounded-none"
-              >
-                <LayoutList className="h-4 w-4" />
-              </Button>
-            </div>
           </div>
         </div>
       </div>
