@@ -84,9 +84,9 @@ export default function HeroSection({ stats }) {
   return (
     <section className="relative">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-background z-0"></div>
-      <div className="relative z-10 container mx-auto px-4 py-20 md:py-32">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
+      <div className="relative z-10 container mx-auto px-4 py-20 ">
+        <div className="grid md:grid-cols-2 gap-12">
+          <div className="space-y-6 pt-60">
             <div className="text-center space-y-4">
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
@@ -117,7 +117,7 @@ export default function HeroSection({ stats }) {
                 collection.
               </motion.p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center items-center">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
