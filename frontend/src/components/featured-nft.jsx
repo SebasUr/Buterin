@@ -42,7 +42,7 @@ const FeaturedNFTs = ({ featuredNfts }) => {
         >
           {featuredNfts.map((nft) => (
             <motion.div
-              key={nft.id}
+              key={nft.name}
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 },
@@ -51,8 +51,8 @@ const FeaturedNFTs = ({ featuredNfts }) => {
               <Card className="overflow-hidden transition-all hover:shadow-lg">
                 <div className="aspect-square relative">
                   <Image
-                    src={nft.image}
-                    alt={nft.title}
+                    src={nft.image_url}
+                    alt={nft.name}
                     fill
                     className="object-cover"
                   />
@@ -60,10 +60,7 @@ const FeaturedNFTs = ({ featuredNfts }) => {
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-semibold text-lg">{nft.title}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        by @{nft.creator}
-                      </p>
+                      <h3 className="font-semibold text-lg">{nft.name}</h3>
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-muted-foreground">Current Price</p>

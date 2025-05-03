@@ -30,7 +30,6 @@ export default function HeroSection({ stats }) {
       const randomIndex = Math.floor(Math.random() * nftsData.length);
       const selectedNft = nftsData[randomIndex];
       
-      // Normalizamos la estructura del NFT
       const normalizedNft = {
         name: selectedNft.name,
         description: selectedNft.description,
@@ -38,9 +37,7 @@ export default function HeroSection({ stats }) {
         raribleUrl: selectedNft.rarible_url,
         makePrice: selectedNft.price
       };
-      
       setRandomNft(normalizedNft);
-      console.log("NFT seleccionado:", normalizedNft); // Para depuración
     }
   }, [nftsData, randomNft]);
 
@@ -82,7 +79,6 @@ export default function HeroSection({ stats }) {
 
   if (error) {
     console.error("Error fetching NFTs:", error);
-    // Puedes personalizar el mensaje de error aquí
   }
 
   return (
