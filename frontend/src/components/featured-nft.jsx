@@ -1,10 +1,35 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import useSWR from "swr";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
-const FeaturedNFTs = ({ featuredNfts }) => {
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+export default function FeaturedNFTs() {
+  const { data: nftsData, error, isLoading } = useSWR("/api/nfts", fetcher);
+  const [featuredNfts, setFeaturedNfts] = useState([]);
+
+  useEffect(() => {
+    if (nftsData && nftsData.length > 0) {
+      // Ordenar por precio descendente y tomar los 3 primeros
+      const sorted = [...nftsData].sort((a, b) => b.price - a.price);
+      setFeaturedNfts(sorted.slice(0, 3));
+    }
+  }, [nftsData]);
+
+  if (isLoading) {
+    return <p className="text-center py-10">Cargando NFTs destacados…</p>;
+  }
+
+  if (error) {
+    return <p className="text-center py-10 text-red-500">Error al cargar los NFTs.</p>;
+  }
+
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
@@ -12,7 +37,7 @@ const FeaturedNFTs = ({ featuredNfts }) => {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }} // Se activa al estar un 30% visible
+          viewport={{ once: true, amount: 0.3 }}
           variants={{
             hidden: { opacity: 0, y: -20 },
             visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -42,7 +67,7 @@ const FeaturedNFTs = ({ featuredNfts }) => {
         >
           {featuredNfts.map((nft) => (
             <motion.div
-              key={nft.name}
+              key={nft.id ?? nft.name}
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 },
@@ -81,6 +106,4 @@ const FeaturedNFTs = ({ featuredNfts }) => {
       </div>
     </section>
   );
-};
-
-export default FeaturedNFTs;
+}

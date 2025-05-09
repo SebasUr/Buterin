@@ -5,8 +5,10 @@ import useSWR from "swr";
 import HeroSection from "@/components/hero-section";
 import StatsSection from "@/components/stats-section";
 import FeaturedNFTs from "@/components/featured-nft";
+import RecommendedCourses from "@/components/recommended-courses";
 import CallToAction from "@/components/call-to-action";
 import Footer from "@/components/Footer";
+
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -45,10 +47,13 @@ export default function Home() {
       <StatsSection stats={stats} />
       
       {/* Features Section */}
-      <FeaturedNFTs featuredNfts={featuredNfts} />
-
+      <FeaturedNFTs/>
+      {/* Recommended Courses Section */}
+      <RecommendedCourses />
+      {/* Call to Action Section */}
       <CallToAction />
       
+
       {/* Footer */}
       <Footer />
 
