@@ -71,6 +71,9 @@ export default function NavBar() {
             <Link href="/" className="hover:text-primary hover:scale-107 transition-transform">
               Home
             </Link>
+            <Link href="/coins" className="hover:text-primary hover:scale-107 transition-transform">
+              Crypto
+            </Link>
           </div>
         </div>
 
