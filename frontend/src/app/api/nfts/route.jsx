@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import ApiProxy from "../proxy";
 
-const DJANGO_NFTS_URL = "http://localhost:8000/api/nfts";
+const DJANGO_NFTS_URL = "http://35.171.69.43/api/nfts";
 
 export async function GET(params) {
   const {response, status} = await ApiProxy.get(DJANGO_NFTS_URL, false)

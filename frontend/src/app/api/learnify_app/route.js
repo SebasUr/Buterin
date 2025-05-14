@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import ApiProxy from "../proxy";
 
 // URL de la API de Learnify en Django
-const LEARNIFY_URL = "http://127.0.0.1:8000/api/learnify_app/";
+const LEARNIFY_URL = "http://35.171.69.43/api/learnify_app/";
 
 export async function GET(request) {
   try {

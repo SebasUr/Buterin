@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import ApiProxy from "../proxy";
 
-const DJANGO_REGISTER_URL = "http://localhost:8000/api/auth/register/";
+const DJANGO_REGISTER_URL = "http://35.171.69.43/api/auth/register/";
 
 export async function POST(request) {
   const body = await request.json();

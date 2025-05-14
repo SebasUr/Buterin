@@ -3,7 +3,7 @@ import { setAuthToken, setRefreshToken } from "@/lib/auth";
 import { NextResponse } from "next/server";
 import ApiProxy from "../proxy";
 
-const DJANGO_LOGIN_URL = "http://localhost:8000/api/auth/login";
+const DJANGO_LOGIN_URL = "http://35.171.69.43/api/auth/login";
 
 export async function POST(request) {
   const body = await request.json();

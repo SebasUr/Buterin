@@ -94,7 +94,7 @@ export default function ExplorePage() {
   async function handleShopping(event, nftId) {
     event.preventDefault();
     const { response, status } = await ApiProxy.post(
-      `http://localhost:8000/api/cart/add_item/`,
+      `http://35.171.69.43/api/cart/add_item/`,
       { nft_id: nftId },
       true
     );
@@ -109,7 +109,7 @@ export default function ExplorePage() {
     event.preventDefault();
     console.log("Linking NFT with ID:", nftId);
     const { response, status } = await ApiProxy.post(
-      `http://localhost:8000/api/wishlist/add_item/`,
+      `http://35.171.69.43/api/wishlist/add_item/`,
       { nft_id: nftId },
       true
     );

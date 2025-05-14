@@ -14,7 +14,7 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Home() {
   const { data: nftsData, error, isLoading } = useSWR(
-    "http://localhost:8000/api/nfts",
+    "http://35.171.69.43/api/nfts",
     fetcher
   );
   const auth = useAuth();

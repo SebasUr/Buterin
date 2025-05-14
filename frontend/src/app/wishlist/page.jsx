@@ -34,7 +34,7 @@ export default function WishlistPage(params) {
   async function handleClick(event, nftId) {
     event.preventDefault();
     const { response, status } = await ApiProxy.post(
-      "http://localhost:8000/api/wishlist/remove_item/",
+      "http://35.171.69.43/api/wishlist/remove_item/",
       { nft_id: nftId },
       true
     );

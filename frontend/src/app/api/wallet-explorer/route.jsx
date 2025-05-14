@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import ApiProxy from "../proxy";
 
-const DJANGO_WALLET_URL = "http://localhost:8000/api/wallet/";
+const DJANGO_WALLET_URL = "http://35.171.69.43:8000/api/wallet/";
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);

@@ -6,7 +6,7 @@ import { Heart, } from "lucide-react"
 
 export default async function Page({ params }) {
   const { id } = await params
-  const { response, status } = await ApiProxy.get(`http://localhost:8000/api/nfts/${id}`, false);
+  const { response, status } = await ApiProxy.get(`http://35.171.69.43/api/nfts/${id}`, false);
 
   
   return (
