@@ -9,7 +9,7 @@ export default function ShoppingCartHome() {
     event.preventDefault();
     try {
       const { response, status } = await ApiProxy.post(
-        "http://localhost:8000/api/cart/checkout/",
+        "http://35.171.69.43/api/cart/checkout/",
         {},
         true,
         true
