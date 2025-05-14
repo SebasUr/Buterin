@@ -28,7 +28,7 @@ export default function WalletExplorerPage() {
     setError("")
 
     try {
-      const res = await fetch(`/api/wallet-explorer?wallet=${walletAddress.trim()}`)
+      const res = await fetch(`http://35.171.69.43/api/wallet-explorer?wallet=${walletAddress.trim()}`)
       if (!res.ok) {
         throw new Error("Error al obtener datos del backend")
       }
