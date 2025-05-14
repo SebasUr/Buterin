@@ -28,7 +28,7 @@ export default class ApiProxy{
         status = res.status;
       }
     } catch (error) {
-      response = {message: "Cannot connect to the API server" , error: error};
+      response = {message: error.message};
       status = 500;
     }
     return {response, status};
@@ -46,6 +46,6 @@ export default class ApiProxy{
     return await this.handleFetch(endpoint, {
       method: "GET",
       headers: await this.getHeaders(requiredAuth),
-    })
+    }, false)
   }
 }
