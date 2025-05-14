@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Development",
-  descirption: "Development",
+  title: "Buterin",
+  description: "Explore the world of Crypto with Buterin",
 };
 
 export default function RootLayout({ children }) {
